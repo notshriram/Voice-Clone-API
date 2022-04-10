@@ -8,6 +8,7 @@ import pyrebase
 import json
 from firebase_admin import credentials, auth
 from flask import Flask, request
+import requests
 #App configuration
 app = Flask(__name__)
 #Connect to firebase
@@ -91,5 +92,37 @@ def token():
     except Exception as exception:
         # print the exception
         return {'message': f'There was an error logging in {exception}'},400
+
+
+# api route to generate wav file from POST text and return it
+@app.route('/api/generate', methods=['POST'])
+@check_token
+def generate():
+    user = request.user
+    text = request.form.get('text')
+    if text is None:
+        return {'message': 'Error missing text'},400
+    if user is None:
+        return {'message': 'Error not signed in'},401
+    try:
+        user_id = user['user_id']
+        print(user)
+        url = pb.storage().child(f'{user_id}.wav').get_url()
+        #fetch the file from firebase storage
+        r = requests.get(url)
+        
+        if r.status_code == 200:
+            return r.content, 200
+        elif r.status_code == 404:
+            return {'message': f'Error no voice sample file found for user {user_id}'},404
+        else:
+            return {'message': 'Error fetching file'},400
+
+    except Exception as exception:
+        # print the exception
+        return {'message': f'Error generating: {exception} '},400
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
