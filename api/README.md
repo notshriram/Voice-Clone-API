@@ -4,7 +4,7 @@
 
 Install the requirements for the flask server and firebase
 
-Make sure you are in the current working directory. (i.e; the `api` directory in the repository)
+Make sure you are in the current working directory. (i.e; the `api` directory in this repository)
 
 ```bash
 pip3 install -r requirements.txt
@@ -117,11 +117,12 @@ Error:
 Once you have the auth token, you can view the userinfo.
 
 Here is a curl example:
+```bash
+export TOKEN=<token-received-from-token-endpoint>
+```
 
 ```bash
-export TOKEN=<PASTE TOKEN HERE>
-
-curl --location --request GET 'http://localhost:5000/api/userinfo' --header 'authorization: $TOKEN'
+curl --location --request GET 'http://localhost:5000/api/userinfo' --header "authorization: $TOKEN"
 ```
 
 ### **Responses:**
@@ -179,10 +180,11 @@ In order to generate audio from text with your cloned voice, it is necessary to 
 Once you have uploaded your voice sample as per the [previous route's documentation](#upload-route), you can POST some text to the generate route and download the audio file thus generated
 
 Here is a curl example:
+```bash
+export TOKEN=<token-received-from-token-endpoint>
+```
 
 ```bash
-export TOKEN=your-jwt-token-from-authentication-step
-
 curl -X POST -F 'text=sample text' http://localhost:5000/api/generate --header "authorization: $TOKEN" --output downloaded_audio.wav
 ```
 

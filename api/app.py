@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from functools import wraps
 import re
+import time
 import firebase_admin
 from pyparsing import replaceWith
 import pyrebase
@@ -108,6 +109,7 @@ def generate():
         user_id = user['user_id']
         print(user)
         url = pb.storage().child(f'{user_id}.wav').get_url()
+
         #fetch the file from firebase storage
         r = requests.get(url)
         
