@@ -18,3 +18,7 @@
 encoder/saved_models/*
 synthesizer/saved_models/*
 vocoder/saved_models/*
+fbAdminConfig.json
+fbconfig.json
+env
+.tmp

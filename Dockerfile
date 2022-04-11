@@ -14,7 +14,7 @@ RUN pip3 install -r requirements.txt
 
 RUN python3 test.py
 
-RUN pip3 install flask
+RUN pip3 install -r api/requirements.txt
 
 RUN python3 setup.py
 

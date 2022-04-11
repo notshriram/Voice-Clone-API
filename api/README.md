@@ -145,10 +145,10 @@ In order to generate audio from text with your cloned voice, it is necessary to 
 
 Upload a wav recording of your voice to your account
 Here is a curl example:
-
 ```bash
-export TOKEN=your-jwt-token-from-authentication-step
-
+export TOKEN=<token-received-from-token-endpoint>
+```
+```bash
 curl -F 'file=@<FILEPATH>;type=audio/x-wav' --location --request POST 'http://localhost:5000/api/upload' --header "authorization: $TOKEN"
 ```
 
