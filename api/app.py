@@ -55,7 +55,7 @@ def upload():
     try:
         user_id = user['user_id']
         print(user)
-        pb.storage().child(f'{user_id}.wav').put(request.files['file'])
+        pb.storage().child(f'{user_id}').put(request.files['file'])
         return {'message': f'Successfully uploaded'},201
     except Exception as exception:
         # print the exception
@@ -95,7 +95,7 @@ def token():
         return {'message': f'There was an error logging in {exception}'},400
 
 
-# api route to generate wav file from POST text and return it
+# api route to generate audio file from POST text and return it
 @app.route('/api/generate', methods=['POST'])
 @check_token
 def generate():
@@ -108,7 +108,7 @@ def generate():
     try:
         user_id = user['user_id']
         print(user)
-        url = pb.storage().child(f'{user_id}.wav').get_url()
+        url = pb.storage().child(f'{user_id}').get_url()
 
         #fetch the file from firebase storage
         r = requests.get(url)
@@ -125,6 +125,6 @@ def generate():
         return {'message': f'Error generating: {exception} '},400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
 
 
